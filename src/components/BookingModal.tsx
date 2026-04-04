@@ -429,7 +429,7 @@ export default function BookingModal({ isOpen, onClose, car, lang = 'fr' }: Book
     updatePrice()
   }, [formData.startDate, formData.startTime, formData.endDate, formData.endTime, car, formData.pickupLocation, formData.dropoffLocation, tripSurchargeInDH])
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, overrideCarId?: string) => {
     e.preventDefault()
 
     if (!user && bookingMode === 'auth') {
@@ -508,7 +508,7 @@ export default function BookingModal({ isOpen, onClose, car, lang = 'fr' }: Book
         }
 
         const bookingPayload = {
-          carId: selectedCarForBookingId || car.id,
+          carId: overrideCarId || selectedCarForBookingId || car.id,
           startDate: start.toISOString(),
           endDate: end.toISOString(),
           pickupLocation: formData.pickupLocation,
@@ -520,7 +520,7 @@ export default function BookingModal({ isOpen, onClose, car, lang = 'fr' }: Book
         response = await api.createBooking(bookingPayload, token)
       } else {
         const guestBookingPayload = {
-          carId: selectedCarForBookingId || car.id,
+          carId: overrideCarId || selectedCarForBookingId || car.id,
           startDate: start.toISOString(),
           endDate: end.toISOString(),
           pickupLocation: formData.pickupLocation,
@@ -979,9 +979,8 @@ export default function BookingModal({ isOpen, onClose, car, lang = 'fr' }: Book
                                     type="button"
                                     onClick={() => {
                                       setSelectedCarForBookingId(suggestedCar.id);
-                                      // Create synthetic event to trigger form submission with new car
                                       const event = { preventDefault: () => {} } as React.FormEvent;
-                                      handleSubmit(event);
+                                      handleSubmit(event, suggestedCar.id);
                                     }}
                                     className="px-3 py-1.5 bg-yellow-500 text-white text-xs font-medium rounded-md hover:bg-yellow-600 transition-colors"
                                   >
