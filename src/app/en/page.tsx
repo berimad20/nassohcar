@@ -1,7 +1,6 @@
 ﻿﻿﻿﻿﻿'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
 import { MapPin, Calendar, Car, ChevronDown, Shield, ArrowRight, ChevronLeft, ChevronRight, Users, Settings, Fuel } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -30,15 +29,14 @@ interface CarType {
 }
 
 export default function HomeEN() {
-  const router = useRouter()
   const { bookingData, updateBookingData } = useBooking()
-  const [isSearching, setIsSearching] = useState(false)
   const [cars, setCars] = useState<CarType[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
   const sliderRef = useRef<HTMLDivElement>(null)
+  const fleetSectionRef = useRef<HTMLElement>(null)
   const [selectedCarForBooking, setSelectedCarForBooking] = useState<CarType | null>(null)
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
@@ -83,9 +81,7 @@ export default function HomeEN() {
   const handleBookingSearch = () => {
     if (!bookingData.pickupLocation || !bookingData.startDate || !bookingData.endDate) { alert('Please fill in all required fields'); return }
     if (new Date(bookingData.startDate) >= new Date(bookingData.endDate)) { alert('End date must be after start date'); return }
-    setIsSearching(true)
-    const searchParams = new URLSearchParams({ pickup: bookingData.pickupLocation, dropoff: bookingData.dropoffLocation || bookingData.pickupLocation, startDate: bookingData.startDate, endDate: bookingData.endDate })
-    router.push(`/en/fleet?${searchParams.toString()}`)
+    fleetSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   const articles = [
@@ -158,8 +154,8 @@ export default function HomeEN() {
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <button onClick={handleBookingSearch} disabled={isSearching} className="w-full sm:w-auto bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-bold py-3 px-8 lg:px-12 rounded-xl hover:from-amber-500 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed text-sm lg:text-base min-w-[200px]">
-                    {isSearching ? (<div className="flex items-center justify-center"><div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black mr-2"></div>SEARCHING...</div>) : ('BOOK A CAR')}
+                  <button onClick={handleBookingSearch} className="w-full sm:w-auto bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-bold py-3 px-8 lg:px-12 rounded-xl hover:from-amber-500 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105 text-sm lg:text-base min-w-[200px]">
+                    SEE VEHICLES
                   </button>
                 </div>
               </div>
@@ -167,7 +163,7 @@ export default function HomeEN() {
           </div>
         </section>
 
-        <section className="py-20 bg-gradient-to-b from-slate-900 to-black" aria-label="Our vehicle fleet">
+        <section ref={fleetSectionRef} className="py-20 bg-gradient-to-b from-slate-900 to-black" aria-label="Our vehicle fleet">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <header className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">Our <span className="bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent">Car Fleet</span></h2>
@@ -219,7 +215,7 @@ export default function HomeEN() {
                 )}
 
                 <div className="text-center mt-12">
-                  <button onClick={() => router.push('/en/fleet')} className="bg-white/10 backdrop-blur-md border border-amber-400/30 text-white font-bold py-4 px-8 rounded-xl hover:bg-amber-400/20 hover:border-amber-400 transition-all duration-300 flex items-center mx-auto">View Full Fleet<ArrowRight className="ml-2 h-5 w-5" /></button>
+                  <Link href="/en/fleet" className="bg-white/10 backdrop-blur-md border border-amber-400/30 text-white font-bold py-4 px-8 rounded-xl hover:bg-amber-400/20 hover:border-amber-400 transition-all duration-300 flex items-center mx-auto w-fit">View Full Fleet<ArrowRight className="ml-2 h-5 w-5" /></Link>
                 </div>
               </div>
             ) : (

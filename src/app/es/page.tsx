@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
 import { MapPin, Calendar, Car, ChevronDown, Shield, ArrowRight, Clock, ChevronLeft, ChevronRight, Users, Settings, Fuel } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -30,15 +29,14 @@ interface CarType {
 }
 
 export default function HomeES() {
-  const router = useRouter()
   const { bookingData, updateBookingData } = useBooking()
-  const [isSearching, setIsSearching] = useState(false)
-  const [cars, setCars] = useState<CarType[]>([])  
+  const [cars, setCars] = useState<CarType[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
   const sliderRef = useRef<HTMLDivElement>(null)
+  const fleetSectionRef = useRef<HTMLElement>(null)
   const [selectedCarForBooking, setSelectedCarForBooking] = useState<CarType | null>(null)
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
@@ -83,9 +81,7 @@ export default function HomeES() {
   const handleBookingSearch = () => {
     if (!bookingData.pickupLocation || !bookingData.startDate || !bookingData.endDate) { alert('Por favor complete todos los campos obligatorios'); return }
     if (new Date(bookingData.startDate) >= new Date(bookingData.endDate)) { alert("La fecha de finalización debe ser posterior a la fecha de inicio"); return }
-    setIsSearching(true)
-    const searchParams = new URLSearchParams({ pickup: bookingData.pickupLocation, dropoff: bookingData.dropoffLocation || bookingData.pickupLocation, startDate: bookingData.startDate, endDate: bookingData.endDate })
-    router.push(`/es/flota?${searchParams.toString()}`)
+    fleetSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   const articles = [
@@ -158,8 +154,8 @@ export default function HomeES() {
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <button onClick={handleBookingSearch} disabled={isSearching} className="w-full sm:w-auto bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-bold py-3 px-8 lg:px-12 rounded-xl hover:from-amber-500 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed text-sm lg:text-base min-w-[200px]">
-                    {isSearching ? (<div className="flex items-center justify-center"><div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black mr-2"></div>BUSCANDO...</div>) : ('RESERVAR UN COCHE')}
+                  <button onClick={handleBookingSearch} className="w-full sm:w-auto bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-bold py-3 px-8 lg:px-12 rounded-xl hover:from-amber-500 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105 text-sm lg:text-base min-w-[200px]">
+                    VER LOS VEHÍCULOS
                   </button>
                 </div>
               </div>
@@ -168,7 +164,7 @@ export default function HomeES() {
         </section>
 
       {/* Car Fleet Section */}
-      <section className="py-20 bg-gradient-to-b from-slate-900 to-black" aria-label="Nuestra flota de vehículos">
+      <section ref={fleetSectionRef} className="py-20 bg-gradient-to-b from-slate-900 to-black" aria-label="Nuestra flota de vehículos">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <header className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
@@ -269,13 +265,13 @@ export default function HomeES() {
 
         {/* View All Fleet Button */}
         <div className="text-center mt-12">
-          <button 
-            onClick={() => router.push('/es/flota')}
-            className="bg-white/10 backdrop-blur-md border border-amber-400/30 text-white font-bold py-4 px-8 rounded-xl hover:bg-amber-400/20 hover:border-amber-400 transition-all duration-300 flex items-center mx-auto"
+          <Link
+            href="/es/flota"
+            className="bg-white/10 backdrop-blur-md border border-amber-400/30 text-white font-bold py-4 px-8 rounded-xl hover:bg-amber-400/20 hover:border-amber-400 transition-all duration-300 flex items-center mx-auto w-fit"
           >
             Ver Toda la Flota
             <ArrowRight className="ml-2 h-5 w-5" />
-          </button>
+          </Link>
         </div>
         </div>
       </section>
