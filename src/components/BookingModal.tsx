@@ -36,9 +36,9 @@ const LOCATION_CONDITIONS: Record<string, { minDays: number; extraFeePerTrip?: n
   'tangier-airport': {
     minDays: 5,
     message: {
-      fr: 'La location à l\'Aéroport de Tanger nécessite un minimum de 5 jours.',
-      en: 'Rental at Tangier Airport requires a minimum of 5 days.',
-      es: 'El alquiler en el Aeropuerto de Tánger requiere un mínimo de 5 días.'
+      fr: 'La livraison du véhicule à l\'aéroport de Tanger nécessite une durée minimale de 5 jours. Merci de choisir notre agence comme lieu de prise en charge ou de contacter notre service client au +212631630013',
+      en: 'Vehicle delivery to Tangier Airport requires a minimum of 5 days. Please select our agency as the pickup location or contact our customer service at +212631630013',
+      es: 'La entrega del vehículo en el Aeropuerto de Tánger requiere un mínimo de 5 días. Por favor, seleccione nuestra agencia como lugar de recogida o contacte con nuestro servicio de atención al cliente en el +212631630013'
     }
   },
   'tangier-med': {
