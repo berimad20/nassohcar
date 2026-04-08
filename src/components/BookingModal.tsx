@@ -41,6 +41,30 @@ const LOCATION_CONDITIONS: Record<string, { minDays: number; extraFeePerTrip?: n
       es: 'La entrega del vehículo en el Aeropuerto de Tánger requiere un mínimo de 5 días. Por favor, seleccione nuestra agencia como lugar de recogida o contacte con nuestro servicio de atención al cliente en el +212631630013'
     }
   },
+  'tangier-port': {
+    minDays: 5,
+    message: {
+      fr: 'La livraison du véhicule au Port de Tanger Ville nécessite une durée minimale de 5 jours. Merci de choisir notre agence comme lieu de prise en charge ou de contacter notre service client au +212631630013',
+      en: 'Vehicle delivery to Tangier City Port requires a minimum of 5 days. Please select our agency as the pickup location or contact our customer service at +212631630013',
+      es: 'La entrega del vehículo al Puerto de Tánger Ville requiere un mínimo de 5 días. Por favor, seleccione nuestra agencia como lugar de recogida o contacte con nuestro servicio de atención al cliente en el +212631630013'
+    }
+  },
+  'tangier-train': {
+    minDays: 5,
+    message: {
+      fr: 'La livraison du véhicule à la Gare de Tanger nécessite une durée minimale de 5 jours. Merci de choisir notre agence comme lieu de prise en charge ou de contacter notre service client au +212631630013',
+      en: 'Vehicle delivery to Tangier Train Station requires a minimum of 5 days. Please select our agency as the pickup location or contact our customer service at +212631630013',
+      es: 'La entrega del vehículo a la Estación de Tren de Tánger requiere un mínimo de 5 días. Por favor, seleccione nuestra agencia como lugar de recogida o contacte con nuestro servicio de atención al cliente en el +212631630013'
+    }
+  },
+  'hotel-delivery': {
+    minDays: 5,
+    message: {
+      fr: 'La livraison du véhicule à l\'hôtel nécessite une durée minimale de 5 jours. Merci de choisir notre agence comme lieu de prise en charge ou de contacter notre service client au +212631630013',
+      en: 'Vehicle delivery to the hotel requires a minimum of 5 days. Please select our agency as the pickup location or contact our customer service at +212631630013',
+      es: 'La entrega del vehículo al hotel requiere un mínimo de 5 días. Por favor, seleccione nuestra agencia como lugar de recogida o contacte con nuestro servicio de atención al cliente en el +212631630013'
+    }
+  },
   'tangier-med': {
     minDays: 10,
     extraFeePerTrip: 300,
